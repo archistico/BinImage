@@ -100,7 +100,15 @@ func main() {
 		}
 	}
 
-	fmt.Println(img.RGBAAt(0,0))
+	colore := img.RGBAAt(0,0)
+	valore1 := colore.R
+	valore2 := colore.G
+	valore3 := colore.B
+	valore4 := colore.A
+
+	fmt.Printf("Il valore del primo pixel: %s %s %s %s\n", string(valore1), string(valore2), string(valore3), string(valore4))
+
+
 
 	// Encode as PNG.
 	f, _ := os.Create("image.png")
