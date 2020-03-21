@@ -49,12 +49,15 @@ func main() {
 	check(errUnmarshal)
 
 	fmt.Println(v.NomeFile)
-	dataLength := len(dat)
 
 	// Create image
 
-	width := 200
-	height := 100
+	divinacommedia, err := ioutil.ReadFile("divinacommedia.txt")
+	check(err)
+	divinacommedia_length := len(divinacommedia)
+
+	width := 500
+	height := 500
 
 	upLeft := image.Point{0, 0}
 	lowRight := image.Point{width, height}
@@ -72,26 +75,26 @@ func main() {
 			var Blue byte = 0
 			var Alpha byte = 0
 
-			if indexData < dataLength {
-				Red = dat[indexData]
+			if indexData < divinacommedia_length {
+				Red = divinacommedia[indexData]
 			}
 
 			indexData++
 
-			if indexData < dataLength {
-				Green = dat[indexData]
+			if indexData < divinacommedia_length {
+				Green = divinacommedia[indexData]
 			}
 
 			indexData++
 
-			if indexData < dataLength {
-				Blue = dat[indexData]
+			if indexData < divinacommedia_length {
+				Blue = divinacommedia[indexData]
 			}
 
 			indexData++
 
-			if indexData < dataLength {
-				Alpha = dat[indexData]
+			if indexData < divinacommedia_length {
+				Alpha = divinacommedia[indexData]
 			}
 
 			indexData++
@@ -106,9 +109,23 @@ func main() {
 	valore3 := colore.B
 	valore4 := colore.A
 
-	fmt.Printf("Il valore del primo pixel: %s %s %s %s\n", string(valore1), string(valore2), string(valore3), string(valore4))
+	fmt.Printf("Il valore del pixel: %d %d %d %d\n", valore1, valore2, valore3, valore4)
 
+	colore = img.RGBAAt(0,1)
+	valore1 = colore.R
+	valore2 = colore.G
+	valore3 = colore.B
+	valore4 = colore.A
 
+	fmt.Printf("Il valore del pixel: %s %s %s %s\n", string(valore1), string(valore2), string(valore3), string(valore4))
+
+	colore = img.RGBAAt(0,2)
+	valore1 = colore.R
+	valore2 = colore.G
+	valore3 = colore.B
+	valore4 = colore.A
+
+	fmt.Printf("Il valore del pixel: %s %s %s %s\n", string(valore1), string(valore2), string(valore3), string(valore4))
 
 	// Encode as PNG.
 	f, _ := os.Create("image.png")
