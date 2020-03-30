@@ -67,8 +67,8 @@ func main() {
 	indexData := 0
 
 	// Set color for each pixel.
-	for x := 0; x < width; x++ {
-		for y := 0; y < height; y++ {
+	for y := 0; y < height; y++ {
+		for x := 0; x < width; x++ {
 
 			var Red byte = 0
 			var Green byte = 0
@@ -103,32 +103,47 @@ func main() {
 		}
 	}
 
-	colore := img.RGBAAt(0,0)
-	valore1 := colore.R
-	valore2 := colore.G
-	valore3 := colore.B
-	valore4 := colore.A
-
-	fmt.Printf("Il valore del pixel: %d %d %d %d\n", valore1, valore2, valore3, valore4)
-
-	colore = img.RGBAAt(0,1)
-	valore1 = colore.R
-	valore2 = colore.G
-	valore3 = colore.B
-	valore4 = colore.A
-
-	fmt.Printf("Il valore del pixel: %s %s %s %s\n", string(valore1), string(valore2), string(valore3), string(valore4))
-
-	colore = img.RGBAAt(0,2)
-	valore1 = colore.R
-	valore2 = colore.G
-	valore3 = colore.B
-	valore4 = colore.A
-
-	fmt.Printf("Il valore del pixel: %s %s %s %s\n", string(valore1), string(valore2), string(valore3), string(valore4))
-
 	// Encode as PNG.
 	f, _ := os.Create("image.png")
 	png.Encode(f, img)
+
+	// Decode img to file
+	indexData = 0
+	var s []byte
+
+	for y := 0; y < height; y++ {
+		for x := 0; x < width; x++ {
+
+			colore := img.RGBAAt(x,y)
+
+			if indexData < divinacommedia_length {
+				s = append(s, colore.R)
+			}
+
+			indexData++
+
+			if indexData < divinacommedia_length {
+				s = append(s, colore.G)
+			}
+
+			indexData++
+
+			if indexData < divinacommedia_length {
+				s = append(s, colore.B)
+			}
+
+			indexData++
+
+			if indexData < divinacommedia_length {
+				s = append(s, colore.A)
+			}
+
+			indexData++
+		}
+	}
+
+	nomeFile := "export.txt"
+	err = ioutil.WriteFile(nomeFile, s, 0644)
+	check(err)
 
 }
