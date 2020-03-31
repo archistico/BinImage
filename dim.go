@@ -58,12 +58,35 @@ func choiseFormat(d int, i []Format) Format {
 
 	// fai una lista dei primi due minimi
 	sort.Sort(ByNumeroImmagini(i))
-	fmt.Println(i)
 
-	// calcolo per ogni formato il numero di byte vuoti
-	//performance := make([]int, 7)
+	minimo := 0
+	minimo2 := 0
 
-	return i[0]
+	for c := 0; c < len(i); c++ {
+		if c == 0 {
+			minimo = i[c].immagini
+		}
+		if minimo != i[c].immagini {
+			if minimo2 == 0 {
+				if i[c].immagini > minimo {
+					minimo2 = i[c].immagini
+				}
+			}
+		}
+	}
+
+	// aggiungi a ris solo i formati con immagini == a minimo e minimo2
+	ris := []Format {}
+	for c := 0; c < len(i); c++ {
+		if i[c].immagini == minimo || i[c].immagini == minimo2 {
+			ris = append(ris, i[c])
+		}
+	}
+
+	// ordino in base ai byte lost
+	sort.Sort(ByLostByte(ris))
+
+	return ris[0]
 }
 
 type Format struct {
@@ -75,11 +98,15 @@ type Format struct {
 }
 
 type ByNumeroImmagini []Format
-type ByLossByte []Format
+type ByLostByte []Format
 
 func (a ByNumeroImmagini) Len() int           { return len(a) }
 func (a ByNumeroImmagini) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a ByNumeroImmagini) Less(i, j int) bool { return a[i].immagini < a[j].immagini }
+
+func (a ByLostByte) Len() int           { return len(a) }
+func (a ByLostByte) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a ByLostByte) Less(i, j int) bool { return a[i].lost < a[j].lost }
 
 func main() {
 	var images = []Format{
