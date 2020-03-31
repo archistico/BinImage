@@ -52,7 +52,7 @@ func main() {
 
 	// Create image
 
-	divinacommedia, err := ioutil.ReadFile("divinacommedia.txt")
+	divinacommedia, err := ioutil.ReadFile("lorem.txt")
 	check(err)
 	divinacommedia_length := len(divinacommedia)
 
