@@ -52,8 +52,6 @@ func choiseFormat(d int, i []Format) Format {
 
 		i[c].immagini = immagini
 		i[c].lost = lost
-
-		fmt.Printf("formato %s \tnum:%d \tlost:%s\n", i[c].name, immagini, FormatNumber(int64(lost)))
 	}
 
 	// fai una lista dei primi due minimi
@@ -120,7 +118,11 @@ func main() {
 	}
 
 	dataLength :=2000000
+	fmt.Printf("Data: %s [byte]\n", FormatNumber(int64(dataLength)))
 
 	format := choiseFormat(dataLength, images)
-	fmt.Printf("Format choise: %s %d %d\n", format.name, format.w, format.h)
+	maxByteInFormat := calcNumberByte(format)
+	format.immagini = calcNumberImageRequired(dataLength, maxByteInFormat)
+	format.lost = calcNumberByteLost(dataLength, maxByteInFormat)
+	fmt.Printf("Choise: %s | w:%d | h:%d | images:%d | lost:%s\n", format.name, format.w, format.h, format.immagini, FormatNumber(int64(format.lost)))
 }
