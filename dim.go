@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"math"
+	"sort"
 	"strconv"
 )
 
@@ -46,10 +47,18 @@ func choiseFormat(d int, i []Format) Format {
 	//numeroimmagini := make([]int, 7)
 
 	for c := 0; c < len(i); c++ {
-		numImage := calcNumberImageRequired(d, calcNumberByte(i[c]))
-		numBlost := calcNumberByteLost(d, calcNumberByte(i[c]))
-		fmt.Printf("formato %s \tnum:%d \tlost:%s\n", i[c].name, numImage, FormatNumber(int64(numBlost)))
+		immagini := calcNumberImageRequired(d, calcNumberByte(i[c]))
+		lost := calcNumberByteLost(d, calcNumberByte(i[c]))
+
+		i[c].immagini = immagini
+		i[c].lost = lost
+
+		fmt.Printf("formato %s \tnum:%d \tlost:%s\n", i[c].name, immagini, FormatNumber(int64(lost)))
 	}
+
+	// fai una lista dei primi due minimi
+	sort.Sort(ByNumeroImmagini(i))
+	fmt.Println(i)
 
 	// calcolo per ogni formato il numero di byte vuoti
 	//performance := make([]int, 7)
@@ -61,17 +70,26 @@ type Format struct {
 	name string
 	w int
 	h int
+	immagini int
+	lost int
 }
+
+type ByNumeroImmagini []Format
+type ByLossByte []Format
+
+func (a ByNumeroImmagini) Len() int           { return len(a) }
+func (a ByNumeroImmagini) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a ByNumeroImmagini) Less(i, j int) bool { return a[i].immagini < a[j].immagini }
 
 func main() {
 	var images = []Format{
-		{"qvga", 320, 240},
-		{"vga", 640, 480},
-		{"svga",800, 600},
-		{"xga",1024, 768},
-		{"hd720",1280, 720},
-		{"hd1080",1920, 1080},
-		{"wqhd",2560, 1140},
+		{"qvga", 320, 240, 0,0},
+		{"vga", 640, 480, 0,0},
+		{"svga",800, 600, 0,0},
+		{"xga",1024, 768, 0,0},
+		{"hd720",1280, 720, 0,0},
+		{"hd1080",1920, 1080, 0,0},
+		{"wqhd",2560, 1140, 0,0},
 	}
 
 	dataLength :=2000000
