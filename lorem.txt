@@ -1,4 +1,0 @@
-Vediamo se riusciamo a nascondere questo testo e inoltre a gestire cose particolari come andate a capo.
-Accenti àèéìòù
-Caratteri speciali @#^?!£&
-Questa è una password...

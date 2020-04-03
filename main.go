@@ -102,6 +102,27 @@ func choiseFormat(d int, i []Format) Format {
 	return ris[0]
 }
 
+func suddividiBlocchi(dati []byte, max int) [][]byte {
+	datiLength := len(dati)
+	blocchi := int(math.Ceil(float64(datiLength)/float64(max)))
+
+	res := [][]byte{}
+
+	for index:=0; index<blocchi; index++ {
+		in:=max*index
+		fi:=max*(index+1)
+		if (fi)<datiLength {
+			res = append(res, dati[in:fi])
+		} else {
+			res = append(res, dati[in:])
+		}
+
+		//fmt.Println(dati[max*index:])
+	}
+
+	return res
+}
+
 func EncodeImage(dati []byte, nomeFile string, width int, height int) {
 	datiLength := len(dati)
 
@@ -239,13 +260,16 @@ func main() {
 
 	// ---------- DIVIDO I DATI IN ENTRATA ---------------
 	// creo un array di byte per ogni immagine
+	dati, err := ioutil.ReadFile(conf.NomeFile)
+	check(err)
+	blocchi := suddividiBlocchi(dati, maxByteInFormat)
 
 	// ---------- CODIFICA ---------------
 	// mando solo una sequenza di byte
-	dati, err := ioutil.ReadFile(conf.NomeFile)
-	check(err)
-
-	EncodeImage(dati, conf.NomeImmagine+conf.EstensioneImmagine, formatoImmagini.w, formatoImmagini.h)
+	for c:=0; c<len(blocchi); c++ {
+		n:=fmt.Sprintf("%s%d%s", conf.NomeImmagine, c, conf.EstensioneImmagine)
+		EncodeImage(blocchi[c], n, formatoImmagini.w, formatoImmagini.h)
+	}
 
 	// ---------------------------------------
 	fmt.Print("-- Conversione completata --")
