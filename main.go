@@ -4,6 +4,9 @@ import (
 	"fmt"
 	"github.com/alexflint/go-arg"
 	"github.com/goccy/go-yaml"
+	"image"
+	"image/color"
+	"image/png"
 	"io/ioutil"
 	"math"
 	"os"
@@ -99,6 +102,62 @@ func choiseFormat(d int, i []Format) Format {
 	return ris[0]
 }
 
+func EncodeImage(conf FileConf, form Format) {
+	divinacommedia, err := ioutil.ReadFile(conf.NomeFile)
+	check(err)
+	divinacommediaLength := len(divinacommedia)
+
+	upLeft := image.Point{0, 0}
+	lowRight := image.Point{form.w, form.h}
+
+	img := image.NewRGBA(image.Rectangle{upLeft, lowRight})
+
+	indexData := 0
+
+	// Set color for each pixel.
+	for y := 0; y < form.h; y++ {
+		for x := 0; x < form.w; x++ {
+
+			var Red byte = 0
+			var Green byte = 0
+			var Blue byte = 0
+			var Alpha byte = 0
+
+			if indexData < divinacommediaLength {
+				Red = divinacommedia[indexData]
+			}
+
+			indexData++
+
+			if indexData < divinacommediaLength {
+				Green = divinacommedia[indexData]
+			}
+
+			indexData++
+
+			if indexData < divinacommediaLength {
+				Blue = divinacommedia[indexData]
+			}
+
+			indexData++
+
+			if indexData < divinacommediaLength {
+				Alpha = divinacommedia[indexData]
+			}
+
+			indexData++
+
+			img.Set(x, y, color.RGBA{Red, Green, Blue, Alpha})
+		}
+	}
+
+	f, _ := os.Create(conf.NomeImmagine+conf.EstensioneImmagine)
+	png.Encode(f, img)
+}
+
+
+// ------------------- TYPE ----------------------
+
 type Format struct {
 	name string
 	w int
@@ -122,6 +181,8 @@ type FileConf struct {
 	NomeFile string `yaml:"NomeFile"`
 	DataLength int `yaml:"DataLength"`
 	NomeImmagine string `yaml:"NomeImmagine"`
+	EstensioneImmagine  string `yaml:"EstensioneImmagine"`
+	NumeroImmagini int `yaml:"NumeroImmagini"`
 }
 
 func main() {
@@ -138,21 +199,6 @@ func main() {
 	check(err)
 	dataLength := int(f.Size())
 
-	// SCRITTURA FILE CONFIGURAZIONE
-	NomeConf := strings.TrimSuffix(NomeFile, filepath.Ext(NomeFile))
-	FileConfName := NomeConf + ".yaml"
-	NomeImmagine := NomeConf + ".png"
-
-	conf := FileConf{
-		NomeFile:   NomeFile,
-		DataLength: dataLength,
-		NomeImmagine: NomeImmagine,
-	}
-	bytes, errMarshal := yaml.Marshal(conf)
-	check(errMarshal)
-	err = ioutil.WriteFile(FileConfName, bytes, 0644)
-	check(err)
-
 	// ---------- SCELTA FORMATO ---------------
 
 	var images = []Format{
@@ -167,11 +213,34 @@ func main() {
 
 	fmt.Printf("Data: %s [byte]\n", FormatNumber(int64(dataLength)))
 
-	format := choiseFormat(dataLength, images)
-	maxByteInFormat := calcNumberByte(format)
-	format.immagini = calcNumberImageRequired(dataLength, maxByteInFormat)
-	format.lost = calcNumberByteLost(dataLength, maxByteInFormat)
-	fmt.Printf("Choise: %s | w:%d | h:%d | images:%d | lost:%s\n", format.name, format.w, format.h, format.immagini, FormatNumber(int64(format.lost)))
+	formatoImmagini := choiseFormat(dataLength, images)
+	maxByteInFormat := calcNumberByte(formatoImmagini)
+	formatoImmagini.immagini = calcNumberImageRequired(dataLength, maxByteInFormat)
+	formatoImmagini.lost = calcNumberByteLost(dataLength, maxByteInFormat)
+	fmt.Printf("Choise: %s | w:%d | h:%d | images:%d | lost:%s\n", formatoImmagini.name, formatoImmagini.w, formatoImmagini.h, formatoImmagini.immagini, FormatNumber(int64(formatoImmagini.lost)))
+
+	// ---------- SCRITTURA FILE CONFIGURAZIONE ---------------
+
+	NomeConf := strings.TrimSuffix(NomeFile, filepath.Ext(NomeFile))
+	FileConfName := NomeConf + ".yaml"
+	NomeImmagine := NomeConf
+	EstensioneImmagine := ".png"
+
+	conf := FileConf{
+		NomeFile:   NomeFile,
+		DataLength: dataLength,
+		NomeImmagine: NomeImmagine,
+		EstensioneImmagine: EstensioneImmagine,
+		NumeroImmagini: formatoImmagini.immagini,
+	}
+
+	bytes, errMarshal := yaml.Marshal(conf)
+	check(errMarshal)
+	err = ioutil.WriteFile(FileConfName, bytes, 0644)
+	check(err)
+
+	// ---------- CODIFICA ---------------
+	EncodeImage(conf, formatoImmagini)
 
 	// ---------------------------------------
 	fmt.Print("-- Conversione completata --")
