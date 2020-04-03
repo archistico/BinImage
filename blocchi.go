@@ -5,19 +5,22 @@ import (
 	"math"
 )
 
-func suddividiBlocchi(dati string, max int) []string {
+func suddividiBlocchi(dati []byte, max int) [][]byte {
 	datiLength := len(dati)
 	blocchi := int(math.Ceil(float64(datiLength)/float64(max)))
 
-	res := []string{}
+	res := [][]byte{}
 
 	for index:=0; index<blocchi; index++ {
-
-		if (max*(index+1))<datiLength {
-			res = append(res, dati[max*index:max*(index+1)])
+		in:=max*index
+		fi:=max*(index+1)
+		if (fi)<datiLength {
+			res = append(res, dati[in:fi])
 		} else {
-			res = append(res, dati[max*index:])
+			res = append(res, dati[in:])
 		}
+
+		//fmt.Println(dati[max*index:])
 	}
 
 	return res
@@ -25,9 +28,10 @@ func suddividiBlocchi(dati string, max int) []string {
 
 func main() {
 	// Divisione blocchi di codice
-	dati := "12345678901234567890123456789012345"
+	dati := []byte("12345678901234567890123456789012345")
 	maxImmagine := 10
+	fmt.Println("Dati: ", dati)
 
 	arr := suddividiBlocchi(dati, maxImmagine)
-	fmt.Println(arr)
+	fmt.Println("Suddivisione: ", arr)
 }
