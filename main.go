@@ -255,10 +255,20 @@ func main() {
 
 	NomeFile:=args.NomeFile
 	file, err := os.Open(NomeFile)
+	defer file.Close()
 	check(err)
 	f, err := file.Stat()
 	check(err)
 	dataLength := int(f.Size())
+
+	// ----------- CREAZIONE HASH --------------
+
+	//h := sha1.New()
+	//if _, err := io.Copy(h, f); err != nil {
+	//	log.Fatal(err)
+	//}
+	//
+	//fmt.Printf("% x", h.Sum(nil))
 
 	// ---------- SCELTA FORMATO ---------------
 
