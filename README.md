@@ -2,15 +2,16 @@
 Software che converte un file in un'immagine
 
 ### UTILIZZO
-Eseguire da go  
+#### Eseguire da go  
 `go run NOMEFILE`
 
-Compilazione  
+#### Compilazione  
 `go build -o shadeofcolor.exe main.go`  
 `shadeofcolor NOMEFILE`
 
-Opzioni  
-
+#### Opzioni  
+Per scegliere il formato desiderato dell'immagine  
+`shadeofcolor NOMEFILE -f`
 
 ### TODO
  - MD5/SHA1 hash file originale
