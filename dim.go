@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/alexflint/go-arg"
 	"math"
 	"sort"
 	"strconv"
@@ -107,6 +108,15 @@ func (a ByLostByte) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
 func (a ByLostByte) Less(i, j int) bool { return a[i].lost < a[j].lost }
 
 func main() {
+
+	var args struct {
+		NomeFile string `arg:"-n" help:"il nome del file da convertire"`
+		NumeroByte int  `arg:"-b" help:"numero di byte"`
+	}
+	arg.MustParse(&args)
+
+	dataLength :=int(args.NumeroByte)
+
 	var images = []Format{
 		{"qvga", 320, 240, 0,0},
 		{"vga", 640, 480, 0,0},
@@ -117,7 +127,6 @@ func main() {
 		{"wqhd",2560, 1140, 0,0},
 	}
 
-	dataLength :=2000000
 	fmt.Printf("Data: %s [byte]\n", FormatNumber(int64(dataLength)))
 
 	format := choiseFormat(dataLength, images)
