@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"github.com/alexflint/go-arg"
 	"github.com/goccy/go-yaml"
@@ -116,8 +117,6 @@ func suddividiBlocchi(dati []byte, max int) [][]byte {
 		} else {
 			res = append(res, dati[in:])
 		}
-
-		//fmt.Println(dati[max*index:])
 	}
 
 	return res
@@ -174,6 +173,36 @@ func EncodeImage(dati []byte, nomeFile string, width int, height int) {
 	png.Encode(f, img)
 }
 
+func ConsoleFormat(f []Format) int {
+	for index:=0; index<len(f); index++ {
+		fmt.Printf("%d) %7s | w:%4d | h:%4d\n", index, f[index].name, f[index].w, f[index].h)
+	}
+
+	fmt.Printf("Scegli il formato desiderato: ")
+	reader := bufio.NewReader(os.Stdin)
+	char, _, err := reader.ReadRune()
+
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	res:=0
+	switch char {
+		case '1':
+			res = 1
+		case '2':
+			res =  2
+		case '3':
+			res =  3
+		case '4':
+			res =  4
+		case '5':
+			res =  5
+		case '6':
+			res =  6
+	}
+	return res
+}
 
 // ------------------- TYPE ----------------------
 
@@ -208,8 +237,21 @@ func main() {
 
 	var args struct {
 		NomeFile string `arg:"positional, required" help:"Nome del file da convertire"`
+		Formato bool `arg:"-f" help:"Seleziona il formato di output. Altrimenti sceglie in automatico"`
 	}
 	arg.MustParse(&args)
+
+	// ---------------- TITOLO -------------------
+
+	titolo:= `|---------------------------------------------------------|
+|  _____ _         _            ___            _          |
+| |   __| |_ ___ _| |___    ___|  _|   ___ ___| |___ ___  |
+| |__   |   | .'| . | -_|  | . |  _|  |  _| . | | . |  _| |
+| |_____|_|_|__,|___|___|  |___|_|    |___|___|_|___|_|   |
+|---------------------------------------------------------|
+                                     by Emilie Rollandin`
+
+	fmt.Println(titolo)
 
 	NomeFile:=args.NomeFile
 	file, err := os.Open(NomeFile)
@@ -230,20 +272,30 @@ func main() {
 		{"wqhd",2560, 1140, 0,0},
 	}
 
-	fmt.Printf("Data: %s [byte]\n", FormatNumber(int64(dataLength)))
+	fmt.Printf("Dimensione file: %s [byte]\n", FormatNumber(int64(dataLength)))
 
-	formatoImmagini := choiseFormat(dataLength, images)
+	// FORZATURA DEL FORMATO
+	var formatoImmagini Format
+	if args.Formato {
+		indexFormato:=ConsoleFormat(images)
+		formatoImmagini = images[indexFormato]
+	} else {
+		formatoImmagini = choiseFormat(dataLength, images)
+	}
+
+	// CALCOLO DATI PRINCIPALI
+
 	maxByteInFormat := calcNumberByte(formatoImmagini)
 	formatoImmagini.immagini = calcNumberImageRequired(dataLength, maxByteInFormat)
 	formatoImmagini.lost = calcNumberByteLost(dataLength, maxByteInFormat)
-	fmt.Printf("Choise: %s | w:%d | h:%d | images:%d | lost:%s\n", formatoImmagini.name, formatoImmagini.w, formatoImmagini.h, formatoImmagini.immagini, FormatNumber(int64(formatoImmagini.lost)))
+	fmt.Printf("Formato selezionato: %7s | w:%4d | h:%4d | images:%4d | persi:%10s\n", formatoImmagini.name, formatoImmagini.w, formatoImmagini.h, formatoImmagini.immagini, FormatNumber(int64(formatoImmagini.lost)))
 
 	// ---------- SCRITTURA FILE CONFIGURAZIONE ---------------
 
 	NomeConf := strings.TrimSuffix(NomeFile, filepath.Ext(NomeFile))
 	FileConfName := NomeConf + ".yaml"
 	NomeImmagine := NomeConf
-	EstensioneImmagine := ".png"
+	EstensioneImmagine := "png"
 
 	conf := FileConf{
 		NomeFile:   NomeFile,
@@ -267,14 +319,20 @@ func main() {
 	// ---------- CODIFICA ---------------
 	// mando solo una sequenza di byte
 	for c:=0; c<len(blocchi); c++ {
-		n:=fmt.Sprintf("%s%d%s", conf.NomeImmagine, c, conf.EstensioneImmagine)
+		n:=fmt.Sprintf("%s-%d.%s", conf.NomeImmagine, c, conf.EstensioneImmagine)
 		EncodeImage(blocchi[c], n, formatoImmagini.w, formatoImmagini.h)
 	}
 
-	// ---------------------------------------
-	fmt.Print("-- Conversione completata --")
+	// ----------- CHIUSURA --------------
+	chiusura:= `|---------------------------------------------------------|
+|  FILE ESPORTATI                                         |
+|---------------------------------------------------------|`
+	fmt.Print(chiusura)
 
 	// TODO
 	// - MD5/SHA1 hash file originale
 	// - Encrypt data
+	// - Scegliere il formato desiderato
+	// - Poter gestire un solo canale (R, G, B, A)
 }
+
