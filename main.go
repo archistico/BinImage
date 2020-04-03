@@ -332,7 +332,6 @@ func main() {
 	// TODO
 	// - MD5/SHA1 hash file originale
 	// - Encrypt data
-	// - Scegliere il formato desiderato
 	// - Poter gestire un solo canale (R, G, B, A)
 }
 
