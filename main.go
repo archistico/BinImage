@@ -328,10 +328,5 @@ func main() {
 |  FILE ESPORTATI                                         |
 |---------------------------------------------------------|`
 	fmt.Print(chiusura)
-
-	// TODO
-	// - MD5/SHA1 hash file originale
-	// - Encrypt data
-	// - Poter gestire un solo canale (R, G, B, A)
 }
 
