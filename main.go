@@ -102,47 +102,45 @@ func choiseFormat(d int, i []Format) Format {
 	return ris[0]
 }
 
-func EncodeImage(conf FileConf, form Format) {
-	divinacommedia, err := ioutil.ReadFile(conf.NomeFile)
-	check(err)
-	divinacommediaLength := len(divinacommedia)
+func EncodeImage(dati []byte, nomeFile string, width int, height int) {
+	datiLength := len(dati)
 
 	upLeft := image.Point{0, 0}
-	lowRight := image.Point{form.w, form.h}
+	lowRight := image.Point{width, height}
 
 	img := image.NewRGBA(image.Rectangle{upLeft, lowRight})
 
 	indexData := 0
 
 	// Set color for each pixel.
-	for y := 0; y < form.h; y++ {
-		for x := 0; x < form.w; x++ {
+	for y := 0; y < height; y++ {
+		for x := 0; x < width; x++ {
 
 			var Red byte = 0
 			var Green byte = 0
 			var Blue byte = 0
 			var Alpha byte = 0
 
-			if indexData < divinacommediaLength {
-				Red = divinacommedia[indexData]
+			if indexData < datiLength {
+				Red = dati[indexData]
 			}
 
 			indexData++
 
-			if indexData < divinacommediaLength {
-				Green = divinacommedia[indexData]
+			if indexData < datiLength {
+				Green = dati[indexData]
 			}
 
 			indexData++
 
-			if indexData < divinacommediaLength {
-				Blue = divinacommedia[indexData]
+			if indexData < datiLength {
+				Blue = dati[indexData]
 			}
 
 			indexData++
 
-			if indexData < divinacommediaLength {
-				Alpha = divinacommedia[indexData]
+			if indexData < datiLength {
+				Alpha = dati[indexData]
 			}
 
 			indexData++
@@ -151,7 +149,7 @@ func EncodeImage(conf FileConf, form Format) {
 		}
 	}
 
-	f, _ := os.Create(conf.NomeImmagine+conf.EstensioneImmagine)
+	f, _ := os.Create(nomeFile)
 	png.Encode(f, img)
 }
 
@@ -239,9 +237,20 @@ func main() {
 	err = ioutil.WriteFile(FileConfName, bytes, 0644)
 	check(err)
 
+	// ---------- DIVIDO I DATI IN ENTRATA ---------------
+	// creo un array di byte per ogni immagine
+
 	// ---------- CODIFICA ---------------
-	EncodeImage(conf, formatoImmagini)
+	// mando solo una sequenza di byte
+	dati, err := ioutil.ReadFile(conf.NomeFile)
+	check(err)
+
+	EncodeImage(dati, conf.NomeImmagine+conf.EstensioneImmagine, formatoImmagini.w, formatoImmagini.h)
 
 	// ---------------------------------------
 	fmt.Print("-- Conversione completata --")
+
+	// TODO
+	// - MD5/SHA1 hash file originale
+	// - Encrypt data
 }
