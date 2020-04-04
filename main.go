@@ -249,7 +249,7 @@ func main() {
 | |__   |   | .'| . | -_|  | . |  _|  |  _| . | | . |  _| |
 | |_____|_|_|__,|___|___|  |___|_|    |___|___|_|___|_|   |
 |---------------------------------------------------------|
-                                     by Emilie Rollandin`
+|                                    by Emilie Rollandin  |`
 
 	fmt.Println(titolo)
 
@@ -281,8 +281,8 @@ func main() {
 		{"hd1080",1920, 1080, 0,0},
 		{"wqhd",2560, 1140, 0,0},
 	}
-
-	fmt.Printf("Dimensione file: %s [byte]\n", FormatNumber(int64(dataLength)))
+	fmt.Println("|                                                         |")
+	fmt.Printf("|  DIMENSIONE FILE INPUT: %23s [byte]  |\n", FormatNumber(int64(dataLength)))
 
 	// FORZATURA DEL FORMATO
 	var formatoImmagini Format
@@ -298,7 +298,8 @@ func main() {
 	maxByteInFormat := calcNumberByte(formatoImmagini)
 	formatoImmagini.immagini = calcNumberImageRequired(dataLength, maxByteInFormat)
 	formatoImmagini.lost = calcNumberByteLost(dataLength, maxByteInFormat)
-	fmt.Printf("Formato selezionato: %7s | w:%4d | h:%4d | images:%4d | persi:%10s\n", formatoImmagini.name, formatoImmagini.w, formatoImmagini.h, formatoImmagini.immagini, FormatNumber(int64(formatoImmagini.lost)))
+	fmt.Println("|---------------------------------------------------------|")
+	fmt.Printf("|  FORMATO IMMAGINE: %6s | %4d x %4d | IMMAGINI:%4d |\n", strings.ToUpper(formatoImmagini.name), formatoImmagini.w, formatoImmagini.h, formatoImmagini.immagini)
 
 	// ---------- SCRITTURA FILE CONFIGURAZIONE ---------------
 
@@ -320,6 +321,11 @@ func main() {
 	err = ioutil.WriteFile(FileConfName, bytes, 0644)
 	check(err)
 
+	testofileconf:= `|---------------------------------------------------------|
+|  FILE DI CONFIGURAZIONE YAML ESPORTATO                  |`
+	fmt.Print(testofileconf)
+	fmt.Println()
+
 	// ---------- DIVIDO I DATI IN ENTRATA ---------------
 	// creo un array di byte per ogni immagine
 	dati, err := ioutil.ReadFile(conf.NomeFile)
@@ -335,7 +341,7 @@ func main() {
 
 	// ----------- CHIUSURA --------------
 	chiusura:= `|---------------------------------------------------------|
-|  FILE ESPORTATI                                         |
+|  FILE IMMAGINI ESPORTATI                                |
 |---------------------------------------------------------|`
 	fmt.Print(chiusura)
 }
