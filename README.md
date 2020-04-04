@@ -1,4 +1,4 @@
-![Immagini di un export](https://github.com/archistico/BinImage/raw/master/screenshot/console1.png)
+![Console](https://github.com/archistico/BinImage/raw/master/screenshot/console1.png)
 
 # SHADE OF COLOR
 Software che converte un file in un'immagine
@@ -8,7 +8,7 @@ Software che converte un file in un'immagine
 `go run main.go NOMEFILE`
 
 #### Sample esportazione
-![Immagini di un export](https://github.com/archistico/BinImage/raw/master/testi/divinacommedia-0.png)
+![Immagine di un export](https://github.com/archistico/BinImage/raw/master/testi/divinacommedia-640x480-000.png)
 
 #### Compilazione  
 `go build -o shadeofcolor.exe main.go`  
