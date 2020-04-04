@@ -304,7 +304,7 @@ func main() {
 
 	NomeConf := strings.TrimSuffix(NomeFile, filepath.Ext(NomeFile))
 	FileConfName := NomeConf + ".yaml"
-	NomeImmagine := NomeConf
+	NomeImmagine := fmt.Sprintf("%s-%dx%d", NomeConf, formatoImmagini.w, formatoImmagini.h)
 	EstensioneImmagine := "png"
 
 	conf := FileConf{
@@ -329,7 +329,7 @@ func main() {
 	// ---------- CODIFICA ---------------
 	// mando solo una sequenza di byte
 	for c:=0; c<len(blocchi); c++ {
-		n:=fmt.Sprintf("%s-%d.%s", conf.NomeImmagine, c, conf.EstensioneImmagine)
+		n:=fmt.Sprintf("%s-%03d.%s", conf.NomeImmagine, c, conf.EstensioneImmagine)
 		EncodeImage(blocchi[c], n, formatoImmagini.w, formatoImmagini.h)
 	}
 
