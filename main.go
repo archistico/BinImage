@@ -233,9 +233,15 @@ type FileConf struct {
 	DataLength int `yaml:"DataLength"`
 	NomeImmagine string `yaml:"NomeImmagine"`
 	EstensioneImmagine  string `yaml:"EstensioneImmagine"`
+	LarghezzaImmagine int `yaml:"LarghezzaImmagine"`
+	AltezzaImmagine int `yaml:"AltezzaImmagine"`
 	NumeroImmagini int `yaml:"NumeroImmagini"`
 	Sha1 string `yaml:"Sha1"`
 }
+
+// ----------------------------------------
+// -------------- MAIN --------------------
+// ----------------------------------------
 
 func main() {
 
@@ -317,6 +323,8 @@ func main() {
 		DataLength: dataLength,
 		NomeImmagine: NomeImmagine,
 		EstensioneImmagine: EstensioneImmagine,
+		LarghezzaImmagine: formatoImmagini.w,
+		AltezzaImmagine: formatoImmagini.h,
 		NumeroImmagini: formatoImmagini.immagini,
 		Sha1: hash,
 	}
