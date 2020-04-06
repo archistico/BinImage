@@ -1,5 +1,6 @@
-NomeFile: ./testi/divinacommedia.txt
+NomeFile: testi/divinacommedia.txt
 DataLength: 576609
-NomeImmagine: ./testi/divinacommedia-640x480
+NomeImmagine: testi/divinacommedia-320x240
 EstensioneImmagine: png
-NumeroImmagini: 1
+NumeroImmagini: 2
+Sha1: 40bbbb5f38a74037dbfa72d6a6e818bc57f537f0

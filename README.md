@@ -20,7 +20,6 @@ Per scegliere il formato desiderato dell'immagine
 `shadeofcolor NOMEFILE -f`
 
 ### TODO
- - MD5/SHA1 hash file originale
  - Encrypt data
  - Poter gestire un solo canale (R, G, B, A)
  

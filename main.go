@@ -2,13 +2,16 @@ package main
 
 import (
 	"bufio"
+	"crypto/sha1"
 	"fmt"
 	"github.com/alexflint/go-arg"
 	"github.com/goccy/go-yaml"
 	"image"
 	"image/color"
 	"image/png"
+	"io"
 	"io/ioutil"
+	"log"
 	"math"
 	"os"
 	"path/filepath"
@@ -231,6 +234,7 @@ type FileConf struct {
 	NomeImmagine string `yaml:"NomeImmagine"`
 	EstensioneImmagine  string `yaml:"EstensioneImmagine"`
 	NumeroImmagini int `yaml:"NumeroImmagini"`
+	Sha1 string `yaml:"Sha1"`
 }
 
 func main() {
@@ -263,12 +267,12 @@ func main() {
 
 	// ----------- CREAZIONE HASH --------------
 
-	//h := sha1.New()
-	//if _, err := io.Copy(h, f); err != nil {
-	//	log.Fatal(err)
-	//}
-	//
-	//fmt.Printf("% x", h.Sum(nil))
+	h := sha1.New()
+	if _, err := io.Copy(h, file); err != nil {
+		log.Fatal(err)
+	}
+
+	hash := fmt.Sprintf("%x", h.Sum(nil))
 
 	// ---------- SCELTA FORMATO ---------------
 
@@ -314,6 +318,7 @@ func main() {
 		NomeImmagine: NomeImmagine,
 		EstensioneImmagine: EstensioneImmagine,
 		NumeroImmagini: formatoImmagini.immagini,
+		Sha1: hash,
 	}
 
 	bytes, errMarshal := yaml.Marshal(conf)
