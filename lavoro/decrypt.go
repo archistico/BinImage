@@ -8,7 +8,6 @@ import (
 	"image/png"
 	"io"
 	"io/ioutil"
-	"math"
 	"os"
 )
 
@@ -30,7 +29,7 @@ type FileConf struct {
 }
 
 func getBytes(file io.Reader) []byte {
-	img, _, _ := image.Decode(file)
+	img, _ := png.Decode(file)
 
 	var lista []byte
 
@@ -40,16 +39,32 @@ func getBytes(file io.Reader) []byte {
 	for y := 0; y < height; y++ {
 			for x := 0; x < width; x++ {
 	 */
-	bounds := img.Bounds()
-	width, height := bounds.Max.X, bounds.Max.Y
-	for y := 0; y < height; y++ {
-		for x := 0; x < width; x++ {
-			R,G,B,A := img.At(x, y).RGBA()
-			lista = append(lista, byte(math.Round(float64(R)/257)))
-			lista = append(lista, byte(math.Round(float64(G)/257)))
-			lista = append(lista, byte(math.Round(float64(B)/257)))
-			lista = append(lista, byte(math.Round(float64(A)/257)))
+	for y := 0; y < 1; y++ {
+		for x := 0; x < 16; x++ {
 
+			R,G,B,A := img.At(x, y).RGBA()
+
+			fmt.Printf("R %#18b | %d", R, R)
+			//R |= R >> 8
+			fmt.Printf(" R %#18b | %d\n", byte(R/257), byte(R/257))
+
+			fmt.Printf("G %#18b | %d", G, G)
+			//G |= G >> 8
+			fmt.Printf(" G %#18b | %d\n", byte(G/257), byte(G/257))
+
+			fmt.Printf("B %#18b | %d", B, B)
+			//B |= B >> 8
+			fmt.Printf(" B %#18b | %d\n", byte(B/257), byte(B/257))
+
+			fmt.Printf("A %#18b | %d", A, A)
+			//A |= A >> 8
+			fmt.Printf(" A %#18b | %d\n\n", byte(A/257), byte(A/257))
+
+
+			lista = append(lista, byte(R))
+			lista = append(lista, byte(G))
+			lista = append(lista, byte(B))
+			lista = append(lista, byte(A))
 		}
 	}
 	return lista
