@@ -1,0 +1,4 @@
+0123456789
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+abcdefghijklmnopqrstuvwxyz
+\1234567890'ìè+òàù<,.-|!"£$%&/()=?^é*ç°§>;:_

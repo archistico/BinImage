@@ -49,7 +49,7 @@ func FormatNumber(n int64) string {
 }
 
 func calcNumberByte(i Format) int {
-	return i.w*i.h*4
+	return i.w*i.h*3
 }
 
 func calcNumberImageRequired(data int, maxbyte int) int {
@@ -142,7 +142,7 @@ func EncodeImage(dati []byte, nomeFile string, width int, height int) {
 			var Red byte = 0
 			var Green byte = 0
 			var Blue byte = 0
-			var Alpha byte = 0
+			var Alpha byte = 255
 
 			if indexData < datiLength {
 				Red = dati[indexData]
@@ -158,12 +158,6 @@ func EncodeImage(dati []byte, nomeFile string, width int, height int) {
 
 			if indexData < datiLength {
 				Blue = dati[indexData]
-			}
-
-			indexData++
-
-			if indexData < datiLength {
-				Alpha = dati[indexData]
 			}
 
 			indexData++

@@ -33,38 +33,16 @@ func getBytes(file io.Reader) []byte {
 
 	var lista []byte
 
-	/*
 	bounds := img.Bounds()
 	width, height := bounds.Max.X, bounds.Max.Y
 	for y := 0; y < height; y++ {
-			for x := 0; x < width; x++ {
-	 */
-	for y := 0; y < 1; y++ {
-		for x := 0; x < 16; x++ {
+		for x := 0; x < width; x++ {
 
-			R,G,B,A := img.At(x, y).RGBA()
+			R,G,B,_ := img.At(x, y).RGBA()
 
-			fmt.Printf("R %#18b | %d", R, R)
-			//R |= R >> 8
-			fmt.Printf(" R %#18b | %d\n", byte(R/257), byte(R/257))
-
-			fmt.Printf("G %#18b | %d", G, G)
-			//G |= G >> 8
-			fmt.Printf(" G %#18b | %d\n", byte(G/257), byte(G/257))
-
-			fmt.Printf("B %#18b | %d", B, B)
-			//B |= B >> 8
-			fmt.Printf(" B %#18b | %d\n", byte(B/257), byte(B/257))
-
-			fmt.Printf("A %#18b | %d", A, A)
-			//A |= A >> 8
-			fmt.Printf(" A %#18b | %d\n\n", byte(A/257), byte(A/257))
-
-
-			lista = append(lista, byte(R))
-			lista = append(lista, byte(G))
-			lista = append(lista, byte(B))
-			lista = append(lista, byte(A))
+			lista = append(lista, byte(R/257))
+			lista = append(lista, byte(G/257))
+			lista = append(lista, byte(B/257))
 		}
 	}
 	return lista
@@ -103,7 +81,13 @@ func main() {
 		defer file.Close()
 		bLetti = append(bLetti, getBytes(file)...)
 	}
+
 	bScrivere := bLetti[:fileConfYaml.DataLength]
+
+	//for c:=0; c<len(bScrivere) ;c++  {
+	//	fmt.Printf("%X ", bScrivere[c])
+	//}
+
 	err = ioutil.WriteFile(fileConfYaml.NomeFile, bScrivere, 0644)
 	check(err)
 }
