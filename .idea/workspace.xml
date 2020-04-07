@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c5161180-ded8-41bc-a728-035c460a27f2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/lavoro/decrypt.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lavoro/divinacommedia-320x240-000.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lavoro/divinacommedia-320x240-001.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lavoro/divinacommedia.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lavoro/binimage.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pw.go" beforeDir="false" afterPath="$PROJECT_DIR$/lavoro/pw.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lavoro/decrypt.go" beforeDir="false" afterPath="$PROJECT_DIR$/lavoro/decrypt.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,10 +50,10 @@
       <recent name="C:\Users\Archemi\go\src\binimage\screenshot" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\Archemi\go\src\binimage\testi" />
       <recent name="C:\Users\Archemi\go\src\binimage\no" />
       <recent name="C:\Users\Archemi\go\src\binimage\lavoro" />
       <recent name="C:\Users\Archemi\go\src\binimage" />
-      <recent name="C:\Users\Archemi\go\src\binimage\testi" />
     </key>
   </component>
   <component name="RunManager">
