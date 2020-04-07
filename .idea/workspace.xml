@@ -2,8 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c5161180-ded8-41bc-a728-035c460a27f2" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/lavoro/decrypt.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lavoro/divinacommedia-320x240-000.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lavoro/divinacommedia-320x240-001.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lavoro/divinacommedia.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lavoro/binimage.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pw.go" beforeDir="false" afterPath="$PROJECT_DIR$/lavoro/pw.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,7 +40,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/screenshot" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lavoro" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -45,14 +50,15 @@
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Console Font" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Archemi\go\src\binimage\lavoro" />
+      <recent name="C:\Users\Archemi\go\src\binimage\screenshot" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Archemi\go\src\binimage" />
       <recent name="C:\Users\Archemi\go\src\binimage\no" />
       <recent name="C:\Users\Archemi\go\src\binimage\lavoro" />
+      <recent name="C:\Users\Archemi\go\src\binimage" />
       <recent name="C:\Users\Archemi\go\src\binimage\testi" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\Archemi\go\src\binimage\screenshot" />
     </key>
   </component>
   <component name="RunManager">
