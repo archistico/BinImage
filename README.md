@@ -9,7 +9,7 @@ Encrypt/decrypt file to image
 
 #### Sample esportazione
 Tutta la "Divina commedia" di Dante sta in mezza immagine 640x480  
-![Immagine di un export](https://github.com/archistico/ShadeOfColor/raw/master/testi/divinacommedia-640x480-000.png)  
+![Immagine di un export](https://github.com/archistico/ShadeOfColor/raw/master/screenshot/divinacommedia-640x480-000.png)  
 
 #### Compilazione  
 `go build -o shadeofcolor.exe main.go`  

@@ -1,6 +1,7 @@
 package main
 
 import (
+	"crypto/sha1"
 	"fmt"
 	"github.com/alexflint/go-arg"
 	"github.com/goccy/go-yaml"
@@ -8,7 +9,9 @@ import (
 	"image/png"
 	"io"
 	"io/ioutil"
+	"log"
 	"os"
+	"strings"
 )
 
 func check(e error) {
@@ -84,10 +87,23 @@ func main() {
 
 	bScrivere := bLetti[:fileConfYaml.DataLength]
 
-	//for c:=0; c<len(bScrivere) ;c++  {
-	//	fmt.Printf("%X ", bScrivere[c])
-	//}
-
 	err = ioutil.WriteFile(fileConfYaml.NomeFile, bScrivere, 0644)
 	check(err)
+
+	// ----------- CONTROLLO HASH --------------
+
+	file, err := os.Open(fileConfYaml.NomeFile)
+	defer file.Close()
+
+	h := sha1.New()
+	if _, err := io.Copy(h, file); err != nil {
+		log.Fatal(err)
+	}
+
+	hash := fmt.Sprintf("%x", h.Sum(nil))
+	if strings.Compare(hash, fileConfYaml.Sha1)==0 {
+		fmt.Println("HASH FILE ESPORTATO OK")
+	} else {
+		fmt.Println("ATTENZIONE! HASH FILE ESPORTATO NON CORRISPONDE")
+	}
 }
