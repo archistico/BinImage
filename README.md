@@ -1,7 +1,7 @@
 ![Console](https://github.com/archistico/ShadeOfColor/raw/master/screenshot/console1.png)
 
 # SHADE OF COLOR
-Software che converte un file in un'immagine
+Encrypt/decrypt file to image
 
 ### UTILIZZO
 #### Eseguire da go  
