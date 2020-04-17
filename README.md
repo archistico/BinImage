@@ -35,6 +35,9 @@ Per scegliere il formato desiderato dell'immagine
 
 ### TODO
  - Encrypt data
+ - Add random data to fill image
+ - Add data to array pixel real image
+ - Add data in grayscale color
  
 ### LICENSE
 GNU GPL 3.0
